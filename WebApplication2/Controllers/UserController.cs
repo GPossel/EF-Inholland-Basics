@@ -3,6 +3,7 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace WebApplication2.Controllers
 {
@@ -29,7 +30,7 @@ namespace WebApplication2.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            return Ok(_userDbContext.Users);
+            return Ok(_userDbContext.Users.Include(x => x.Invoices));
         }
 
         [HttpPut]
@@ -63,7 +64,28 @@ namespace WebApplication2.Controllers
             return Ok();
         }
 
+        [HttpGet("Invoices")]
+        public IActionResult GetInvoicesWithA()
+        {
+            var userAndInvoice = _userDbContext.Users
+                .Where(x => x.name.StartsWith("A"))
+                .OrderBy(x => x.name)
+                .Select(x => new { name = x.name });
 
+            return Ok(userAndInvoice);
+        }
+
+        [HttpGet]
+        public IActionResult GetInvoiceWithZ()
+        {
+            var invoiceDates = _userDbContext.Users
+                .Where(x => x.name.StartsWith("Z"))
+                .Include(x => x.Invoices)
+                .Select(x => new { invoiceDate = x.Invoices.Select(x => x.date) })
+                .ToList();
+
+            return Ok(invoiceDates);
+        }
         
     }
 }

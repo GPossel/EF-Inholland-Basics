@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
@@ -10,6 +11,6 @@ namespace Domain
         [ForeignKey("userId")]
         public string userId { get; set; }
         public virtual User user { get; set; }
-
+        public DateTime date { get; set; }
     }
 }
