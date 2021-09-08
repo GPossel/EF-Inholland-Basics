@@ -11,8 +11,8 @@ namespace Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string userId { get; set; }
         public string name { get; set; }
-
         public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<UserRoles> roles { get; set; }
 
     }
 }
