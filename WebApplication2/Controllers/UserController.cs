@@ -75,7 +75,7 @@ namespace WebApplication2.Controllers
             return Ok(userAndInvoice);
         }
 
-        [HttpGet]
+        [HttpGet("InvoicesZ-getDates")]
         public IActionResult GetInvoiceWithZ()
         {
             var invoiceDates = _userDbContext.Users
@@ -86,6 +86,16 @@ namespace WebApplication2.Controllers
 
             return Ok(invoiceDates);
         }
-        
+
+        [HttpGet("myDTOconversion")]
+        public IActionResult GetUserAsDTO()
+        {
+            var userDto = _userDbContext.Users
+                .First(x => { x as UserDTO });
+
+
+            return Ok(userDTO);
+        }
+
     }
 }
